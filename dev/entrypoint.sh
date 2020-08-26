@@ -2,7 +2,7 @@
 
 set -e
 
-YARN_DIR = yarn global bin
+YARN_DIR=`yarn global bin`
 
 export PATH=$PATH:/usr/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$YARN_DIR
 

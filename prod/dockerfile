@@ -4,4 +4,6 @@ COPY prod/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
+COPY src/vete-ui/dist/vete-ui /var/www/
+
 CMD ["nginx", "-g daemon off;"]
