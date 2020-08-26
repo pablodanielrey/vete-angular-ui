@@ -1,0 +1,25 @@
+FROM node:14-buster
+
+ENV TZ=America/Argentina/Buenos_Aires
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+#RUN echo "user:x:1000:1000:user:/home/user:/bin/bash" >> /etc/passwd && mkdir /home/user && chown -R 1000:1000 /home/user
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt update && apt install --no-install-recommends yarn
+
+RUN yarn global add @angular/cli
+#RUN ng set --global packageManager=yarn
+RUN mkdir /src && chown 1000:1000 /src
+
+
+USER node
+WORKDIR /src
+
+EXPOSE 4200
+
+COPY dev/entrypoint.sh /
+
+ENTRYPOINT ["/entrypoint.sh"]
